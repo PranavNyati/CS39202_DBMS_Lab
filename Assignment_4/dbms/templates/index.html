@@ -1,0 +1,743 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Homepage</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    {% load static %}
+		<link rel="stylesheet" href="{% static 'assets/css/main.css' %}" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">	
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+	<style>
+    .accordion {
+      background-color:#151565 ;
+      color: white;
+      cursor: pointer;
+      padding: 18px;
+      width: 100%;
+      border: none;
+      text-align: left;
+      outline: none;
+      font-size: 15px;
+      transition: 0.4s;
+      margin-top:10px;
+      border-radius:20px;
+    }
+    
+    .active, .accordion:hover {
+      background-color: #122143;
+
+    }
+
+    .card-body{
+      display:none;
+      
+    }
+    .accordion:after {
+      content: '\002B';
+      color: #777;
+      font-weight: bold;
+      float: right;
+      margin-left: 5px;
+    }
+
+    .list div{
+      margin:0px;
+      padding:0px;
+    }
+   
+    
+    .active:after {
+      content: "\2212";
+      
+    }
+    
+    .panel {
+      padding: 0px 18px;
+      background-color: white;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease-out;
+      margin-top:10px;
+    }
+    #heading{
+      text-align:center;
+      position:relative;
+      padding-top:20vh;
+      font-size:4em;
+      animation-name:moveInLeft;
+      animation-duration:2s;
+      animation-delay: 0.1s;
+    }
+    @keyframes moveInLeft{
+      0%{
+        opacity:0;
+        left:-3.5vw;
+      }
+      15%{
+        opacity:0.25;
+        left:-3vw;
+        }
+      35%{
+        opacity:0.5;
+        left:-2.5vw;
+        }
+
+      50%{
+        opacity:0.75;
+        left:-2vw;
+      }
+      70%{
+        left:-1.5vw;
+      }
+      80%{
+        left:0.5vw;
+      }
+      100%{
+        opacity:1;
+        left:0;
+      }
+    }
+    #headingname{
+      text-align:center;
+      position:relative;
+      padding-top:3vh;
+      font-size:2em;
+      animation-name:moveInRight;
+      animation-duration:2s; 
+      animation-delay: 0.1s;
+    }
+    @keyframes moveInRight{
+      0%{
+        opacity:0;
+        left:3.5vw;
+      }
+      15%{
+        opacity:0.25;
+        left:3vw;
+        }
+      35%{
+        opacity:0.5;
+        left:2.5vw;
+        }
+
+      50%{
+        opacity:0.75;
+        left:2vw;
+      }
+      70%{
+        left:1.5vw;
+      }
+      80%{
+        left:-0.5vw;
+      }
+      100%{
+        opacity:1;
+        left:0;
+      }
+    }
+    #navlink{
+     top:0;
+     position:absolute;
+     background-color:rgb(27, 27, 53);
+     width:99vw;
+     margin:auto;
+     height:8vh;
+     padding-left:10vw !important;
+     padding-top:1.5vh !important;
+    
+    }
+    #navlink a{
+      color:rgb(255, 255, 255);
+      text-decoration:none;
+      margin-right:8vw;
+      padding-bottom:2vh;
+      border:none;
+      cursor: pointer;
+      width:12vw;
+      text-align:center;
+     }
+     
+    #navlink a:hover{
+      color:white !important;
+      border-bottom:5px white solid;
+    }
+    .fr{
+      background-color:#0E1A35 !important;
+      color:white;
+      width:100%;
+      border:none;
+      padding-left:0vw !important;
+    }
+
+    #main > .inner > section {
+      border:none !important;
+      padding-top:10px !important;
+      padding-bottom:10px !important;
+
+  }
+
+	</style>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	</head>
+	<body class="is-preload" >
+    {%if status == 0 %}
+    <meta http-equiv="refresh" content="0.1; url =/" />
+    {% elif type == "db_admin" %}
+    <div id="wrapper">
+
+      <!-- Main -->
+        <div id="main">
+          <div class="inner">
+
+            <!-- Header -->
+              <header id="header" style="border:none;">
+               <h3 style="position:relative;top:5vh;left:-2vw;font-size:1.5em;color:#0E1A35">Welcome to the Admin portal
+                 </h3>
+                 
+                <script>
+                  function giveAlert(event) {
+                    if (!window.confirm("Are you sure you want to delete the user?\n Once deleted the user will lose his access to the system.")) {
+                      event.preventDefault();
+                    }
+                  }
+                  function togglefr(event) {
+                    $("#fr_card").toggle();
+                  }
+                  function togglede(event) {
+                    $("#de").toggle();
+                  }
+                  function toggleph(event) {
+                    $("#ph").toggle();
+                  }
+                
+                </script>
+                  <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" style="width:5vw;height:5vw; border-radius:50%;background-color:white; border:none;float:right;position:relative;left:4vw;">
+                      {% load static %}
+                      <img src="{% static '/1.png' %}" style="height:5vw;border-radius:50%;position:relative; top:-6px;left:-12px">
+                      </button>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="padding-right:0.5vw;">
+                      <li><a class="dropdown-item" href="{% url 'doctor_register' %}">Doctor Registration</a></li>
+                      <li><a class="dropdown-item" href="{% url 'front_desk_register' %}">Front Desk Operator Registration</a> </li> 
+                      <li><a class="dropdown-item" href="{% url 'data_entry_register' %}">Data Entry Operator Registration</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                      <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+                    </div>
+              
+                  </header>
+                  <hr style="border:2px solid black;">
+            <!-- Banner -->
+              <section id="banner">
+                <div class="content"  style="margin-top:4vh;font-size:1.1em">
+                  <header>
+                    <p>Name: {{user.username}} </p>
+                  </header>
+                  </div>
+              </section>
+              <section>
+                <div class="row" style="width:70vw">
+                  <div class="col-md-12 mx-auto">
+                    <div class="card" style="border:5px solid white;">
+                      <div class="card-header text-white" style="background-color:#0E1A35; height:5vh;padding:2px;" >
+                        <button class="fr" onclick="togglefr(event)"><h2 style=" color:white; font-size:0.9em" >Active Front Desk operators</h2></button>
+                      </div>
+                      <div class="card-body" style="border:2px solid #0e1a35;border-radius:5px;font-size:0.9em" id="fr_card">
+                        <ol class="list">
+                          {% for front in fronts %}
+                          <div class="form-group">
+                            <li style="list-style-type:none">
+                              
+                              <form action="{% url whereto %}" enctype="multipart/form-data" method="POST" id="del_front">
+                                {% csrf_token %}
+                              </form>
+                              <div class="card-body" style="display:flex;  justify-content:space-between;" >
+                                <span style="width:20vw" >
+                                  User name: {{front.First_Name}} {{front.Last_Name}} <br>
+                                  Email ID: {{front.Email_ID}}
+                                </span>
+                                <button type="submit" name="front_id" value={{front.Email_ID}} form="del_front"
+                                class="btn btn-block btn-success ml-5" style="width:20vw; background-color:red; height:6vh;"
+                                onclick="giveAlert(event)">Delete</button>
+                              </div>
+                            </li>
+                          </div>
+                          {% empty %}
+                          <div> No Front Desk operator available </div>
+                          {% endfor %}
+                        </ol>
+                       
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </section>
+
+            <section>
+              <div class="row" style="width:70vw">
+                <div class="col-md-12 mx-auto">
+                  <div class="card" style="border:5px solid white;">
+                    <div class="card-header text-white" style="background-color:#0E1A35;height:5vh;padding:2px;" >
+                      <button class="fr" onclick="togglede(event)"><h2 style=" color:white; font-size:0.9em">Active Data Entry operators</h2></button>
+                    </div>
+                    <div class="card-body" style="border:2px solid #0e1a35;border-radius:5px;font-size:0.9em" id="de">
+                      <ol class="list">
+                        {% for data in datas %}
+                        <div class="form-group">
+                          <li style="list-style-type:none">
+                            
+                            <form action="{% url whereto %}" enctype="multipart/form-data" method="POST" id="del_data">
+                              {% csrf_token %}
+                            </form>
+                            <div class="card-body" style="display:flex;  justify-content:space-between; " >
+                              <span style="width:20vw">
+                                User name: {{data.First_Name}} {{data.Last_Name}} <br>
+                                <!-- User ID: {{data.Employee_ID}} <br> -->
+                                Email ID: {{data.Email_ID}} <br>
+                              </span>
+                              <button type="submit" name="data_id" value={{data.Email_ID}} form="del_data"
+                              class="btn btn-block btn-success ml-5" style="width:20vw; background-color:red;margin-top:10px; height:6vh;"
+                              onclick="giveAlert(event)">Delete</button>
+                            </div>
+                          </li>
+                        </div>
+                        {% empty %}
+                        <div> No Data Entry operator available </div>
+                        {% endfor %}
+                      </ol>
+                     
+                    </div>
+                  </div>
+                </div>
+              </div>
+          </section>
+        
+
+          <section>
+            <div class="row" style="width:70vw">
+              <div class="col-md-12 mx-auto">
+                <div class="card" style="border:5px solid white;">
+                  <div class="card-header text-white" style="background-color:#0E1A35;height:5vh;padding:2px;" >
+                    <button class="fr" onclick="toggleph(event)"><h2 style=" color:white; font-size:0.9em">Active Physicians</h2></button>
+                  </div>
+                  <div class="card-body" style="border:2px solid #0e1a35;border-radius:5px;font-size:0.9em" id="ph">
+                    <ol class="list">
+                      {% for doct in docts %}
+                      <div class="form-group">
+                        <li style="list-style-type:none">
+                          
+                          <form action="{% url whereto %}" enctype="multipart/form-data" method="POST" id="del_doctor">
+                            {% csrf_token %}
+                          </form>
+                          <div class="card-body" style="display:flex;  justify-content:space-between; " >
+                            <span style="width:20vw">
+                              User name: Dr. {{doct.First_Name}} {{doct.Last_Name}} <br>
+                              Email ID: {{doct.Email_ID}} <br>
+                            </span>
+                            <button type="submit" name="doct_id" value={{doct.Email_ID}} form="del_doctor"
+                            class="btn btn-block btn-success ml-5" style="width:20vw; background-color:red;margin-top:10px; height:6vh;"
+                            onclick="giveAlert(event)">Delete</button>
+                          </div>
+                        </li>
+                      </div>
+                      {% empty %}
+                      <div> No Physician available </div>
+                      {% endfor %}
+                    </ol>
+                   
+                  </div>
+                </div>
+              </div>
+            </div>
+        </section>
+      
+                      
+        </div>
+        </div>
+      <!-- Sidebar -->
+      <div id="sidebar" style="width:20vw">
+        <div class="inner">
+          <!-- Menu -->
+            <nav id="menu">
+              <header class="major">
+              <h2 style="border:none;font-size:1.5em;padding-left:2vw;">AIIMS, Delhi</h2>
+              </header>
+              <ul class="item">
+                <li><a href="{% url 'doctor_register' %}">Doctor Registration</a></li>
+                <li><a href="{% url 'front_desk_register' %}">Front Desk Operator Registration</a></li> 
+                <li><a href="{% url 'data_entry_register' %}">Data Entry Operator Registration</a></li>
+                <li><a href="{% url 'logout'%}">Logout</a></li>
+                </ul>
+            </nav>
+        </div>
+      </div>
+  </div>
+                    
+    
+    
+    
+    {% elif type == "doctor" %}
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header" style="border:none;">
+								 <h3 style="position:relative;top:5vh;left:-2vw;font-size:1.5em;color:#0E1A35">Welcome to the Doctor Portal
+									 </h3>
+										
+										<div class="dropdown">
+											{% comment %} <p style="color:black;float:right;position:relative;top:-2.5vh;left:-0.2vw;">{{user.Employee_ID}}</p> {% endcomment %}
+											<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" style="width:5vw;height:5vw; border-radius:50%;background-color:white; border:none;float:right;position:relative;left:4vw;">
+                        {% load static %}
+                        <img src="{% static '/1.png' %}" style="height:5vw;border-radius:50%;position:relative; top:-6px;left:-12px">
+                                        </button>
+											<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="padding-right:0.5vw;">
+                        <li><a class="dropdown-item" href="{% url 'show_upcoming_appts' %}">Upcoming Appointments</a></li>
+                        <li><hr class="dropdown-divider"></li>
+											  <li><a class="dropdown-item" href="{% url 'doctor_pat_record' %}">Patients' Records</a></li>
+											  <li><hr class="dropdown-divider"></li>
+											  <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+											</ul>
+										  </div>
+											
+										
+										</header>
+										<hr style="border:2px solid black;">
+							<!-- Banner -->
+								<section id="banner">
+									<div class="content">
+										<header>
+
+                      <div style="margin-top:4vh;font-size:1.1em">
+                      <p>Employee ID: {{user.Employee_ID}}</p>
+                      <p>Name: {{user.First_Name}} {{user.Last_Name}}</p>
+                      <p>Email-id: {{user.Email_ID}}</p>
+											<p>Position: {{user.Position}}</p>
+											<p>Department: {{user.Department}}</p>
+                      </div>
+                      
+                     
+                      <div style="margin-top:10vh">
+                      <h4 style="position:relative;left:-20px"> Doctor Statistics</h4 style="position:relative;left:-15px">
+                      <hr style="height:5px;border-width:2px;width:50%">
+                      <p>No of Past Appointments: {{past_appoint_count}}</p>
+                      <p>No of Patients Treated in the past: {{past_patients_count}}</p>
+                      <p>No of Medical Operations done in the past: {{no_of_ops}}</p>
+                      </div>
+
+										</header>
+										</div>
+								</section>
+                            
+					</div>
+					</div>
+				<!-- Sidebar -->
+        <div id="sidebar" style="width:20vw">
+          <div class="inner">
+            <!-- Menu -->
+              <nav id="menu">
+                <header class="major">
+                <h2 style="border:none;font-size:1.5em;padding-left:2vw;">AIIMS, Delhi</h2>
+                </header>
+                <ul class="item">
+                  <li><a href="{%url 'show_upcoming_appts'%}">Upcoming Appointments</a></li>
+                  <li><a href="{%url 'doctor_pat_record'%}">Patients' Records</a></li>
+                  <li><a href="{% url 'logout'%}">Logout</a></li>
+
+                </ul>
+              </nav>
+          </div>
+        </div>
+    </div>
+                      
+      
+    {%elif type == "front_desk" %}
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header" style="border:none;">
+								 <h3 style="position:relative;top:5vh;left:-2vw;font-size:1.5em;color:#0E1A35">Welcome to the Front Desk Portal
+									 </h3>
+									
+										
+										<div class="dropdown">
+											<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" style="width:5vw;height:5vw; border-radius:50%;background-color:white; border:none;float:right;position:relative;left:4vw;">
+                        {% load static %}
+                        <img src="{% static '/1.png' %}" style="height:5vw;border-radius:50%;position:relative; top:-6px;left:-12px"></button>
+											<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="padding-right:0.5vw;">
+											  
+											  <li><a class="dropdown-item" href="{% url 'patient_reg'%}">Register Patient</a></li>
+                        <li><hr class="dropdown-divider"></li>
+											  <li><a class="dropdown-item" href="{% url 'handle_admit'%}">Admit\Discharge</a></li>
+                        <li><hr class="dropdown-divider"></li>
+											  <li><a class="dropdown-item" href="{% url 'schedule_appoint'%}">Schedule an Appointment</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+											</ul>
+										  </div>
+										</header>
+										<hr style="border:2px solid black;">
+							<!-- Banner -->
+								<section id="banner">
+									<div class="content">
+										<header  style="margin-top:4vh;font-size:1.1em">
+											<p>Name: {{user.First_Name}} {{user.Last_Name}}</p>
+											<p>Registration ID: {{user.Employee_ID}}</p>
+                      <p>Email ID: {{user.Email_ID}}</p>
+										</header>
+                    {% block body %}
+
+                    <style>
+                        .btn-issue{
+                            background-color: rgb(1, 144, 1);
+                        }
+
+                        .btn-reserve{
+                            background-color: rgb(0, 153, 255)
+                        }
+
+                        h1 {
+                          font-size: 3em;
+                          font-weight: 300;
+                          line-height: 1em;
+                          text-align: center;
+                          padding: 3rem;
+                          color: #4dc3fa;
+                        }
+
+                        #example{
+                          color:white !important;
+                        }
+                      
+                        h3 {
+                          font-size: 1em;
+                          font-weight: 300;
+                          text-align: center;
+                          display: block;
+                          line-height: 1em;
+                          padding-bottom: 2em;
+                          color: #fb667a;
+                        }
+                      
+                        .container th h1{
+                          font-weight: bold;
+                          font-size: 1em;
+                          text-align: center;
+                          padding: 0rem;
+                          color: #185875;
+                        }
+                      
+                        .container td {
+                          font-weight: normal;
+                          font-size: 1em;
+                          -webkit-box-shadow: 0 2px 2px -2px #0e1119;
+                          -moz-box-shadow: 0 2px 2px -2px #0e1119;
+                          box-shadow: 0 2px 2px -2px #0e1119;
+                        }
+                      
+                        .container {
+                          text-align: center;
+                          overflow: hidden;
+                          width: 100%;
+                          margin: 0 auto;
+                          display: table;
+                          padding: 3rem 0 8em 0;
+                        }
+                      
+                        .container td,
+                        .container th {
+                          padding-bottom: 2%;
+                          padding-top: 2%;
+                          padding-left: 2%;
+                        }
+                      
+                        /* Background-color of the odd rows */
+                        .container tr:nth-child(odd) {
+                          background-color: #323c50;
+                        }
+                      
+                        /* Background-color of the even rows */
+                        .container tr:nth-child(even) {
+                          background-color: #2c3446;
+                        }
+                      
+                        .container th {
+                          background-color: #0E1A35;
+                        }
+                      
+                        
+                        .container td{
+                          color: rgb(226, 223, 223);
+                        }
+
+                        .page-title{
+                          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                        }
+                      
+                        @media (max-width: 800px) {
+                          .container td:nth-child(4),
+                          .container th:nth-child(4) {
+                            display: none;
+                          }
+                        }
+                        h1{
+                          color:white !important;
+                        }
+
+                       
+                      </style>
+
+                      <section>
+                        <div class="container mt-4">
+                          <h1 class="text-center page-title" style="color:white"><strong>Records of Rooms</strong></h1>
+                          <table class="table" id="example">
+                              <thead>
+                                  <tr>
+                                    <th><h1 class="h1">Sr.No</h1></th>
+                                    <th><h1 class="h1">Room Name</h1></th>
+                                    <th><h1 class="h1">Room Type</h1></th> 
+                                    <th><h1 class="h1">Availibility</h1></th>
+                                    
+                                  </tr>
+                              </thead>
+                              <tbody>
+                                  {% for room in rooms %}
+                                  <tr>
+                                      <td>{{forloop.counter}}</td>
+                                      <td>{{room.Room_name}} </td>
+                                      <td>{{room.Type}} </td>
+                                      <td>{{room.Capacity}}</td>
+                                      </tr>
+                                  {% endfor %}
+                              </tbody>
+                          </table>
+                        </div>
+                      </section>
+                    {% endblock %}
+										</div>
+								</section>
+               	</div>
+					</div>
+				<!-- Sidebar -->
+        <div id="sidebar" style="width:20vw">
+          <div class="inner">
+            <!-- Menu -->
+              <nav id="menu">
+                <header class="major">
+                <h2 style="border:none;font-size:1.5em;padding-left:2vw;">AIIMS, Delhi</h2>
+                </header>
+                 
+                <ul class="item">
+                  <li><a href="{% url 'patient_reg'%}">Register Patient</a></li>
+                  <li><a href="{% url 'handle_admit'%}">Admit/Discharge</a></li>
+                  <li><a href="{% url 'schedule_appoint'%}">Schedule an Appointment</a></li>   
+                  <li><a href="{% url 'logout'%}">Logout</a></li>
+                  </ul>
+              </nav>
+          </div>
+        </div>
+    </div>
+    
+    {% elif type == "data_entry"%}
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header" style="border:none;">
+								 <h3 style="position:relative;top:5vh;left:-2vw;font-size:1.5em;color:#0E1A35">Welcome to the Data Entry Portal
+									 </h3>
+									
+										
+										<div class="dropdown">
+											<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false" style="width:5vw;height:5vw; border-radius:50%;background-color:white; border:none;float:right;position:relative;left:4vw;">
+                        {% load static %}
+                        <img src="{% static '/1.png' %}" style="height:5vw;border-radius:50%;position:absolute; top:0.05vh;right:0.02vw;">
+                        </button>
+											<ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2" style="padding-right:0.5vw;">
+											  <li><a class="dropdown-item" href="{% url 'patient_data_entry' %}">Update Patient Info</a></li>
+											  <li><hr class="dropdown-divider"></li>
+											  <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+											</ul>
+										  </div>
+										</header>
+										<hr style="border:2px solid black;">
+							<!-- Banner -->
+								<section id="banner">
+									<div class="content">
+										<header  style="margin-top:4vh;font-size:1.1em">
+											<p>Name: {{user.First_Name}} {{user.Last_Name}}</p>
+											<p>Registration ID: {{user.Employee_ID}}</p>
+                      <p>Email ID: {{user.Email_ID}}</p>
+                
+                    
+										</header>
+										</div>
+								</section>
+                
+            
+					</div>
+					</div>
+				<!-- Sidebar -->
+        <div id="sidebar" style="width:20vw">
+          <div class="inner">
+            <!-- Menu -->
+              <nav id="menu">
+                <header class="major">
+                <h2 style="border:none;font-size:1.5em;padding-left:2vw;">AIIMS, Delhi</h2>
+                </header>
+                <ul class="item">
+                  <li><a href="{% url 'patient_data_entry' %}">Update Patient Info</a></li>
+
+                  <li><a href="{% url 'logout'%}">Logout</a></li>
+                  </ul>
+              </nav>
+          </div>
+        </div>
+    </div>
+
+{% else %}
+{% load static %}
+<div id="mainreg" style="background-image:url('{% static '/a.jpg' %}') ;background-color:#0e1a35; height:100vh;width:99vw;margin:auto;color:white;font-size:1.2em;clip-path: polygon(0 0, 100% 0%, 100% 95%, 0% 100%);background-size:cover">
+<div id="heading" style="width:80%; margin:auto;color:#ffffff;font-weight:bold">All India Institute of Medical Sciences, Delhi</div>
+<div id="navlink">
+<a href="/admin/login/?next=/admin/">Admin Portal</a> 
+<a href="{% url 'admin_login' %}">Admin Login</a>
+<a href="{% url 'doctor_login' %}">Doctor Login</a>
+<a href="{% url 'fr_login' %}">Front Desk Login</a>
+<a href="{% url 'de_login' %}">Data Entry Login</a>
+</div>
+</div> 
+{% endif %}
+
+  {% load static %}
+  <script src="{%static 'assets/js/jquery.min.js'%}"></script>
+  <script src="{%static 'assets/js/browser.min.js' %}"></script>
+  <script src="{%static 'assets/js/breakpoints.min.js' %}"></script>
+  <script src="{%static 'assets/js/util.js' %}"></script>
+  <script src="{%static 'assets/js/main.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+
+	</body>
+</html>
